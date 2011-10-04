@@ -79,7 +79,7 @@ class ThrottledSocket extends BaseSocket implements ISocket {
         if ($delay > 0) {
             sleep($delay);
         }
-        return parent::post($uri, $query, $request);
+        return parent::post($uri, $data, $request);
     }
 
     /**

@@ -101,7 +101,7 @@ abstract class BaseSocket implements ISocket {
      * @access public
      */
     public function get($uri = NULL, $query = array(), $request = array()) {
-        return $this->_socket->post($uri,$query,$request);
+        return $this->_socket->get($uri,$query,$request);
     }
 
     /**
