@@ -1,3 +1,5 @@
+Adapted for CakePHP v2.x
+
 When trying to use the Amazon API, I read a lot about the Amazon rule of only 
 being allowed to make 1 request a second or your web site would be refused 
 access to Amazon if this was ignored too often.
@@ -12,9 +14,7 @@ would marshall the requests being made.
 The system presented here consists of 3 classes and an interface. 
 
 The interface ISocket simply outlines a get and post method as implemented by 
-HttpRequest in CakePHP. It is a shame that HttpRequest does not already have an
-interface that it implements... Interfaces are something that would be a nice 
-addition to CakePHP 2.0 maybe.
+HttpRequest in CakePHP. 
 
 The class NormalSocket simply extends HttpSocket and implements ISocket which
 enables it to be used by ThrottledSocket and CachedSocket. Other than this, it
