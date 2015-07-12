@@ -20,21 +20,24 @@ The class NormalSocket simply extends HttpSocket and implements ISocket which
 enables it to be used by ThrottledSocket and CachedSocket. Other than this, it
 is identical to HttpSocket supplied by CakePHP.
 
-App::import( 'Lib', 'NormalSocket' );
+`App::import( 'Lib', 'NormalSocket' );`
 
 ...
 
+```php
 /* Create a NormalSocket which has the same usage as HttpSocket */
 $ns = new NormalSocket();
 /* Requests to Throttled socket now happen only once per second */
 $response = $ns->get($uri);
-
+```
 
 ThrottledSocket throttles another ISocket implementing object which is 
 passed in the constructor. For example :-
 
+```php
 App::import( 'Lib', 'ThrottledSocket' );
 App::import( 'Lib', 'NormalSocket' );
+```
 
 ...
 
@@ -52,30 +55,36 @@ in the constructor. The class uses the standard CakePHP Cacheing
 mechanism to cache the responses returned by the wrapped socket.
 For example:
 
+```php
 App::import( 'Lib', 'CachedSocket' );
 App::import( 'Lib', 'NormalSocket' );
+```
 
 ...
 
+```php
 /* Create a NormalSocket which has the same usage as HttpSocket */
 $ns = new NormalSocket();
 /* Cache the NormalSocket with the key 'CacheKey' for 1 hour */
 $cs = new CachedSocket($ns, 'CacheKey', 3600 );
 /* Requests to Cached socket now return the cached response for the next hour */
 $response = $cs->get($uri);
-
+```
 
 Using this system of wrapping other Socket objects we can cache throttled requests
 which is ideal for accessing Amazon. Once a request is made, the response will be
 cached so amazon requests are only made when necessary and they will not occur more
 than once per second.
 
+```php
 App::import( 'Lib', 'CachedSocket' );
 App::import( 'Lib', 'ThrottledSocket' );
 App::import( 'Lib', 'NormalSocket' );
+```php
 
 ....
 
+```php
 function GetBookByAsin( $asin ) {
     $ts = new ThrottledSocket( new NormalSocket() );
     $amazonSocket = new CachedSocket( $ts, 'ASIN' . $asin, 3600 );
@@ -83,6 +92,7 @@ function GetBookByAsin( $asin ) {
     $response = $amazonSocket->get($url);
     /* Process XML returned by Amazon */
 }
+```
 
 The first time the example function is called it will make a throttled
 request to amazon and cache the response. For the next hour any requests
